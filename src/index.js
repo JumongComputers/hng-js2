@@ -1,8 +1,9 @@
-const express = require('express');
+// const express = require('express');
 // const fetch = require('node-fetch');
-const dotenv = require('dotenv');
+import express from 'express';
+// const dotenv = require('dotenv');
 import fetch from 'node-fetch';
-
+import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
