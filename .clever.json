@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_8cebd413-5bc8-4388-bbaf-f735edcb44bb",
+      "org_id": "user_8f6d3ab9-931d-4c5a-ac43-0a8423e91f34",
+      "deploy_url": "https://push-n3-par-clevercloud-customers.services.clever-cloud.com/app_8cebd413-5bc8-4388-bbaf-f735edcb44bb.git",
+      "git_ssh_url": "git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_8cebd413-5bc8-4388-bbaf-f735edcb44bb.git",
+      "name": "HNJ2js",
+      "alias": "HNJ2js"
+    }
+  ]
+}
