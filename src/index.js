@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080
 
 // Middleware to get client's IP address
 app.use(async (req, res, next) => {
@@ -72,5 +72,5 @@ app.get('/api/hello', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on 0.0.0.0:${PORT}`);
 });
