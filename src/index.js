@@ -1,13 +1,12 @@
-// const express = require('express');
-// const fetch = require('node-fetch');
 import express from 'express';
-// const dotenv = require('dotenv');
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // Middleware to get client's IP address
 app.use(async (req, res, next) => {
@@ -15,6 +14,7 @@ app.use(async (req, res, next) => {
     const ipResponse = await fetch('https://httpbin.org/ip');
     const ipData = await ipResponse.json();
     req.clientIp = ipData.origin;
+    console.log(`Client IP: ${req.clientIp}`);
   } catch (error) {
     console.error('Failed to fetch public IP:', error);
     req.clientIp = null;
@@ -69,10 +69,11 @@ app.get('/api/hello', async (req, res) => {
       greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celcius in ${location}`
     });
   } catch (error) {
+    console.error('Error in /api/hello endpoint:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on 0.0.0.0:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on ${HOST}:${PORT}`);
 });
