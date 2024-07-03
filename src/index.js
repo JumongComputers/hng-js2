@@ -6,18 +6,14 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || '0.0.0.0';
 
 // Middleware to get client's IP address
-app.use(async (req, res, next) => {
-  try {
-    const ipResponse = await fetch('https://httpbin.org/ip');
-    const ipData = await ipResponse.json();
-    req.clientIp = ipData.origin;
-    console.log(`Client IP: ${req.clientIp}`);
-  } catch (error) {
-    console.error('Failed to fetch public IP:', error);
-    req.clientIp = null;
+app.use((req, res, next) => {
+  const xForwardedFor = req.headers['x-forwarded-for'];
+  if (xForwardedFor) {
+    req.clientIp = xForwardedFor.split(',')[0]; // Take the first IP address in the list
+  } else {
+    req.clientIp = req.connection.remoteAddress;
   }
   next();
 });
@@ -66,14 +62,13 @@ app.get('/api/hello', async (req, res) => {
     res.json({
       client_ip: ip,
       location: location,
-      greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celcius in ${location}`
+      greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celsius in ${location}`
     });
   } catch (error) {
-    console.error('Error in /api/hello endpoint:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on ${HOST}:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
